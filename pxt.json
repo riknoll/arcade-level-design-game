@@ -1,14 +1,20 @@
 {
-    "name": "arcade-level-design-game",
+    "name": "green-friends",
     "version": "0.0.0",
     "description": "",
     "dependencies": {
-        "device": "*"
+        "device": "*",
+        "arcade-tilemap-a-star": "github:jwunderl/arcade-tilemap-a-star#v0.2.1",
+        "tilemaps": "github:microsoft/pxt-tilemaps#v1.7.1"
     },
     "files": [
         "README.md",
         "main.blocks",
-        "main.ts"
+        "main.ts",
+        "enemy.ts",
+        "drawing.ts",
+        "hero.ts",
+        "level.ts"
     ],
     "testFiles": [
         "test.ts"
@@ -17,5 +23,5 @@
     "supportedTargets": [
         "arcade"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }

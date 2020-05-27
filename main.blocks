@@ -1,4 +1,23 @@
-<xml xmlns="http://www.w3.org/1999/xhtml">
-  <variables></variables>
-  <block type="pxt-on-start" x="0" y="0"></block>
-</xml>
+<xml xmlns="https://developers.google.com/blockly/xml"><variables><variable type="BLOCKLY_TILESET_TYPE" id="JWHE{W+CKaV;gI~~NPP,">0;16;16;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</variable><variable type="BLOCKLY_TILESET_TYPE" id="It,?s(eh*NWZ@S4HPr-H">1;16;16;1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</variable><variable type="BLOCKLY_TILESET_TYPE" id="ucd2S[XYm.!l)ER:^D2M">2;16;16;ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</variable><variable type="BLOCKLY_TILESET_TYPE" id=";PU-K#_05!;p842sE2jj">3;16;16;ffffffffffffffff1ffffffffffff1ff1ffffffffffff1ff1ffffffffffff1ff1f111f11ff11f1ff1f1f1f1ffff1f1ff1f111f11f111f1ffffffffffffffffffffffffffffffffff1f111f1ffff1f1ff1f1f1f1ffff1f1ff1f111f11f111f1ffff1ffffffffff1ffff11ffffff1ff1ffffffffffffffffffffffffffffffffff</variable><variable type="BLOCKLY_TILESET_TYPE" id="7JNBcRWh~!Hl%t9e62{r">4;16;16;ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3f3f3ff333f333f33f3f3ffff3f3f3f33f333ff333f3f3f33f3f3fff33fff3f33f3f3ff3f3f333f3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</variable><variable id=",56y/1Iwc#t!2^+X!gV2">e</variable></variables><block type="pxt-on-start" id="LwSmGtITMe%NG.`HNy3e" x="0" y="0"><statement name="HANDLER"><block type="tilemap_loadMap" id="2Q2u%FYu1lT2+8/Js4%S"><value name="map"><shadow type="create_overworld_map" id="J@`$n|fQ{ucb:*0GRU*~"><field name="tilemap">tiles.createTilemap(
+            hex`1000100001010101010101010101010101010101010202020202020202020202020202010102020302020202020202020302020101020202020202020202020202020201010202020202020202020202020202010102020202010101010101020202020101020202020102020202010202020201010202020201020402020102020202010102020202010202020201020202020101020202020101020201010202020201010202020202020202010202020202010102020202020202020102020202020101020202020202020201020202020201010202020202020202010202030202010102020202020202020102020202020101010101010101010101010101010101`,
+            img`
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . . . . . . . . . . . 2 
+2 . . . . 2 2 2 2 2 2 . . . . 2 
+2 . . . . 2 . . . . 2 . . . . 2 
+2 . . . . 2 . . . . 2 . . . . 2 
+2 . . . . 2 . . . . 2 . . . . 2 
+2 . . . . 2 2 . . 2 2 . . . . 2 
+2 . . . . . . . . 2 . . . . . 2 
+2 . . . . . . . . 2 . . . . . 2 
+2 . . . . . . . . 2 . . . . . 2 
+2 . . . . . . . . 2 . . . . . 2 
+2 . . . . . . . . 2 . . . . . 2 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
+`,
+            [myTiles.tile0,myTiles.tile1,myTiles.tile2,myTiles.tile3,myTiles.tile4],
+            TileScale.Sixteen
+        )</field></shadow></value><next><block type="variables_set" id="7lbNn6wRT^#VlX$!PV*F"><field name="VAR" id=",56y/1Iwc#t!2^+X!gV2">e</field><value name="VALUE"><shadow type="math_number" id="5p`__3aV3SaY;@_lKPV["><field name="NUM">0</field></shadow><block type="mapgettilestype" id="-F_ckB1-eA}^#q9C%]Z$"><value name="tile"><shadow type="tileset_tile_picker" id="P=s1~xkOKIm=+9;vj=a]"><field name="tile">myTiles.tile3</field></shadow></value></block></value></block></next></block></statement></block></xml>
