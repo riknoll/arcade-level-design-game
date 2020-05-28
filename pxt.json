@@ -14,7 +14,8 @@
         "enemy.ts",
         "drawing.ts",
         "hero.ts",
-        "level.ts"
+        "level.ts",
+        "projectile.ts"
     ],
     "testFiles": [
         "test.ts"

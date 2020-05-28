@@ -1,3 +1,5 @@
+const ENEMY_FIRE_INTERVAL = 500; 
+
 class EnemyState {
     public static instances: EnemyState[];
 
@@ -7,29 +9,49 @@ class EnemyState {
     public angularVelocity: number;
     public speed: number;
     public path: tiles.Location[];
+    public fireTimer: number;
 
     constructor(public sprite: Sprite) {
         this.heading = 0;
         this.speed = 50;
         this.angularVelocity = 0.2;
 
+        this.fireTimer = ENEMY_FIRE_INTERVAL;
+
         if (!EnemyState.instances) {
             EnemyState.instances = [];
 
-            game.onUpdate(updateEnemies)
+            game.onUpdate(updateEnemies);
+
+            scene.createRenderable(10, function (target, camera) {
+                for (const enemy of EnemyState.instances) {
+                    drawTriangle(
+                        target,
+                        enemy.sprite.x - camera.drawOffsetX,
+                        enemy.sprite.y - camera.drawOffsetY,
+                        enemy.heading,
+                    10)
+                }
+            });
         }
 
         EnemyState.instances.push(this);
     }
 
-    update() {
+    update(dt: number) {
         if (this.sprite.flags & sprites.Flag.Destroyed) {
             this.destroy();
             return;
         }
-        else if (this.targetX == null || this.targetY == null) {
+        
+        this.fireTimer -= dt;
+        if (this.fireTimer <= 0) {
+            this.fireTimer = ENEMY_FIRE_INTERVAL;
+            createEnemyProjectile(this);
+        }
+        
+        if (!this.isMoving()) {
             this.sprite.setVelocity(0, 0);
-            return;
         }
         else if ((this.targetY - this.sprite.y) ** 2 + (this.targetX - this.sprite.x) ** 2 < 6) {
             this.targetX = null;
@@ -38,7 +60,14 @@ class EnemyState {
             return;
         }
 
-        let angle = Math.atan2(this.targetY - this.sprite.y, this.targetX - this.sprite.x);
+        let angle: number;
+
+        if (this.isMoving()) {
+            angle = Math.atan2(this.targetY - this.sprite.y, this.targetX - this.sprite.x);
+        }
+        else {
+            angle = Math.atan2(theHero.y - this.sprite.y, theHero.x - this.sprite.x);
+        } 
 
         if (angle < 0) angle += TWO_PI;
 
@@ -67,7 +96,9 @@ class EnemyState {
             }
         }
 
-        this.sprite.setVelocity(this.speed * Math.cos(this.heading), this.speed * Math.sin(this.heading))
+        if (this.isMoving()) {
+            this.sprite.setVelocity(this.speed * Math.cos(this.heading), this.speed * Math.sin(this.heading))
+        }
     }
 
     moveTo(x: number, y: number) {
@@ -80,7 +111,11 @@ class EnemyState {
         // Toss the first position (the current location)
         this.path.shift();
 
-        // We also want to replace the end position so that the enemies don't pile up
+        // We want to get close, not on top of the player, so pop a few locations
+        this.path.pop();
+        this.path.pop();
+
+        // Also make sure we don't path to the same location as another enemy
         let end = this.path.pop();
         while (end && occupiedMap.get(tilemap.locationColumn(end), tilemap.locationRow(end))) {
             end = this.path.pop();
@@ -104,11 +139,17 @@ class EnemyState {
     destroy() {
         EnemyState.instances.removeElement(this);
     }
+
+    isMoving() {
+        return this.targetX != null && this.targetY != null;
+    }
 }
 
 function updateEnemies() {
+    const dt = game.currentScene().eventContext.deltaTimeMillis;
+
     for (const state of EnemyState.instances) {
-        state.update();
+        state.update(dt);
     }
 }
 
@@ -172,7 +213,6 @@ function createEnemy(location: tiles.Location) {
 
     const enemy = sprites.create(enemyImage, SpriteKind.Enemy);
     tiles.placeOnTile(enemy, location);
-    const ts = new TriangleSprite(enemy);
     const es = new EnemyState(enemy);
 }
 

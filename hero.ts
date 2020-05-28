@@ -6,6 +6,18 @@ function createHero() {
     if (theHero) {
         theHero.destroy();
     }
+    else {
+        scene.createRenderable(10, function (target, camera) {
+            if (!theHero) return;
+            
+            drawTriangle(
+                target,
+                theHero.x - camera.drawOffsetX,
+                theHero.y - camera.drawOffsetY,
+                heading,
+            10)
+        });
+    }
 
     const heroImage = img`
         . . . . 3 3 3 3 3 3 3 . . . .
@@ -27,7 +39,6 @@ function createHero() {
     theHero = sprites.create(heroImage, SpriteKind.Player);
     scene.cameraFollowSprite(theHero);
     tiles.placeOnRandomTile(theHero, myTiles.tile4)
-    const ts = new TriangleSprite(theHero);
 } 
 
 
