@@ -1,4 +1,5 @@
 const ENEMY_FIRE_INTERVAL = 500; 
+const ENEMY_MAX_HEALTH = 10;
 
 class EnemyState {
     public static instances: EnemyState[];
@@ -15,6 +16,8 @@ class EnemyState {
         this.heading = 0;
         this.speed = 50;
         this.angularVelocity = 0.1;
+
+        sprites.setDataBoolean(sprite, "damaged", false);
 
         this.fireTimer = ENEMY_FIRE_INTERVAL;
 
@@ -182,6 +185,27 @@ class Bitmask {
         const index = cellIndex >> 3;
         const offset = cellIndex & 7;
         return (this.mask[index] >> offset) & 1;
+    }
+}
+
+function handleEnemyCollision(enemy: Sprite) {
+    if (!sprites.readDataBoolean(enemy, "damaged")) {
+        sprites.setDataBoolean(enemy, "damaged", true);
+
+        const statusBar = statusbars.create(14, 4, 0);
+        statusBar.setBarBorder(1, 0);
+        statusBar.setColor(0x7, 0x1)
+        statusBar.attachToSprite(enemy);
+        statusBar.max = ENEMY_MAX_HEALTH;
+        statusBar.value = ENEMY_MAX_HEALTH - 1;
+    }
+    else {
+        const statusBar = statusbars.getStatusBarAttachedTo(0, enemy);
+        statusBar.value -= 1;
+        if (statusBar.value === 0) {
+            statusBar.destroy();
+            enemy.destroy();
+        }
     }
 }
 

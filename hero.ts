@@ -2,6 +2,7 @@ const HERO_FIRE_INTERVAL = 100;
 
 
 let theHero: Sprite;
+let heroStatusBar: StatusBarSprite;
 const TWO_PI = Math.PI * 2;
 
 function createHero() {
@@ -19,6 +20,12 @@ function createHero() {
                 heroHeading,
             10)
         });
+        // heroStatusBar = statusbars.create(80, 8, 0);
+        // heroStatusBar.setLabel("HP", 0xd)
+        // heroStatusBar.setColor(0x3, 0x1);
+        // heroStatusBar.setBarBorder(1, 0xd)
+        // heroStatusBar.left = 4;
+        // heroStatusBar.top = 4;
     }
 
     const heroImage = img`

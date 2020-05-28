@@ -57,6 +57,9 @@ class Projectile {
 
         for (const sprite of toCheck) {
             if (testPoint(x, y, sprite._hitbox)) {
+                if (sprite.kind() === SpriteKind.Enemy) {
+                    handleEnemyCollision(sprite);
+                }
                 this.destroy();
                 return;
             }
