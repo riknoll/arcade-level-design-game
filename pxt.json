@@ -5,7 +5,9 @@
     "dependencies": {
         "device": "*",
         "arcade-tilemap-a-star": "github:jwunderl/arcade-tilemap-a-star#v0.2.1",
-        "tilemaps": "github:microsoft/pxt-tilemaps#v1.7.1"
+        "tilemaps": "github:microsoft/pxt-tilemaps#v1.7.1",
+        "arcade-sprite-data": "github:microsoft/arcade-sprite-data#v0.0.5",
+        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.2.8"
     },
     "files": [
         "README.md",
