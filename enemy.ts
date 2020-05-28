@@ -122,6 +122,8 @@ class EnemyState {
         // We want to get close, not on top of the player, so pop a few locations
         this.path.pop();
         this.path.pop();
+        this.path.pop();
+        this.path.pop();
 
         // Also make sure we don't path to the same location as another enemy
         let end = this.path.pop();

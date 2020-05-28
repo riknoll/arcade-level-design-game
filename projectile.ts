@@ -79,7 +79,7 @@ class Projectile {
     }
 }
 
-function createEnemyProjectile(enemy: EnemyState, speed = 100) {
+function createEnemyProjectile(enemy: EnemyState, speed = 75) {
     const projectile = sprites.create(
         img`
             7 7
@@ -94,6 +94,26 @@ function createEnemyProjectile(enemy: EnemyState, speed = 100) {
     projectile.setVelocity(
         Math.cos(enemy.heading) * speed,
         Math.sin(enemy.heading) * speed
+    );
+
+    const p = new Projectile(projectile);
+}
+
+function createHeroProjectile(source: Sprite, heading: number, speed = 150) {
+    const projectile = sprites.create(
+        img`
+            3 3
+            3 3
+        `,
+        SpriteKind.PlayerProjectile
+    );
+
+    projectile.x = source.x;
+    projectile.y = source.y
+
+    projectile.setVelocity(
+        Math.cos(heading) * speed,
+        Math.sin(heading) * speed
     );
 
     const p = new Projectile(projectile);

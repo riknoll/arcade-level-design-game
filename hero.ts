@@ -1,3 +1,5 @@
+const HERO_FIRE_INTERVAL = 100; 
+
 
 let theHero: Sprite;
 const TWO_PI = Math.PI * 2;
@@ -14,7 +16,7 @@ function createHero() {
                 target,
                 theHero.x - camera.drawOffsetX,
                 theHero.y - camera.drawOffsetY,
-                heading,
+                heroHeading,
             10)
         });
     }
@@ -44,14 +46,24 @@ function createHero() {
 
 game.onUpdate(updateHero)
 
-let heading = 0;
+let heroHeading = 0;
+let heroFireTimer = 0;
 let lastPosition: tiles.Location;
 
 
 function updateHero() {
     if (!theHero) return;
-    
 
+    // Handle projectile firing
+    if (heroFireTimer > 0) {
+        heroFireTimer -= control.eventContext().deltaTimeMillis;
+    }
+    else if (controller.A.isPressed()) {
+        heroFireTimer = HERO_FIRE_INTERVAL;
+        createHeroProjectile(theHero, heroHeading);
+    }
+
+    // If the player has moved more than 30 pixels, recalculate enemy paths
     if (!lastPosition || calculateDistance(theHero.x, theHero.y, lastPosition.x, lastPosition.y) > 30) {
         lastPosition = tilemap.locationOfSprite(theHero);
         updatePaths();
@@ -65,32 +77,41 @@ function updateHero() {
         let angle = Math.atan2(dy, dx);
         if (angle < 0) angle += TWO_PI;
 
-        if (angle !== heading) {
-            if (Math.abs(heading - angle) < Math.PI) {
-                if (heading < angle) {
-                    heading += angularVelocity;
+        // Strafe if B is pressed
+        if (controller.B.isPressed()) {
+            theHero.setVelocity(speed * Math.cos(angle), speed * Math.sin(angle))
+            return;
+        }
+
+        if (angle !== heroHeading) {
+            if (Math.abs(heroHeading - angle) < Math.PI) {
+                if (heroHeading < angle) {
+                    heroHeading += angularVelocity;
                 }
                 else {
-                    heading -= angularVelocity
+                    heroHeading -= angularVelocity
                 }
             }
             else {
-                if (heading < angle) {
-                    heading -= angularVelocity;
+                if (heroHeading < angle) {
+                    heroHeading -= angularVelocity;
                 }
                 else {
-                    heading += angularVelocity
+                    heroHeading += angularVelocity
                 } 
             }
 
-            if (heading < 0) heading += TWO_PI;
+            if (heroHeading < 0) heroHeading += TWO_PI;
+            else if (heroHeading >= TWO_PI) {
+                heroHeading -= TWO_PI;
+            }
 
-            if (Math.abs(heading - angle) < 0.1 || Math.abs(heading - TWO_PI - angle) < 0.1) {
-                heading = angle;
+            if (Math.abs(heroHeading - angle) < 0.1 || Math.abs(heroHeading - TWO_PI - angle) < 0.1) {
+                heroHeading = angle;
             }
         }
 
-        theHero.setVelocity(speed * Math.cos(heading), speed * Math.sin(heading))
+        theHero.setVelocity(speed * Math.cos(heroHeading), speed * Math.sin(heroHeading))
     }
     else {
         theHero.setVelocity(0, 0);
