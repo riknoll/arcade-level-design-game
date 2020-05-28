@@ -14,7 +14,7 @@ class EnemyState {
     constructor(public sprite: Sprite) {
         this.heading = 0;
         this.speed = 50;
-        this.angularVelocity = 0.2;
+        this.angularVelocity = 0.1;
 
         this.fireTimer = ENEMY_FIRE_INTERVAL;
 
@@ -91,13 +91,21 @@ class EnemyState {
 
             if (this.heading < 0) this.heading += TWO_PI;
 
-            if (Math.abs(this.heading - angle) < 0.3 || Math.abs(this.heading - TWO_PI - angle) < 0.3) {
+            if (Math.abs(this.heading - angle) < 0.15 || Math.abs(this.heading - TWO_PI - angle) < 0.15) {
                 this.heading = angle;
             }
         }
 
         if (this.isMoving()) {
-            this.sprite.setVelocity(this.speed * Math.cos(this.heading), this.speed * Math.sin(this.heading))
+            if (this.heading === angle) {
+                this.sprite.setVelocity(this.speed * Math.cos(this.heading), this.speed * Math.sin(this.heading))
+            }
+            else {
+                this.sprite.setVelocity((this.speed >> 2) * Math.cos(this.heading), (this.speed >> 2) * Math.sin(this.heading)) 
+            }
+        }
+        else {
+            this.sprite.setVelocity(0, 0)
         }
     }
 
