@@ -46,7 +46,7 @@ class Projectile {
 
     checkWalls(tm: tiles.TileMap) {
         if ((this.sprite.flags & sprites.Flag.Destroyed) || 
-            tm.isObstacle(this.sprite.x >> tm.scale, this.sprite.y >> tm.scale)) {
+            tm.isObstacle(this.sprite.x >> tm.scale, this.sprite.y >> tm.scale) && !isHalfHeightCover(tm, this.sprite.x >> tm.scale, this.sprite.y >> tm.scale)) {
             this.destroy();
         }
     }
@@ -97,6 +97,10 @@ function createEnemyProjectile(enemy: EnemyState, speed = 100) {
     );
 
     const p = new Projectile(projectile);
+}
+
+function isHalfHeightCover(tm: tiles.TileMap, col: number, row: number) {
+    return tm.getTileImage(tm.getTileIndex(col, row)) === myTiles.tile5
 }
 
 function testPoint(x: Fx8, y: Fx8, hitbox: game.Hitbox) {
