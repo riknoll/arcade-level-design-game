@@ -250,5 +250,14 @@ function createEnemy(location: tiles.Location) {
     const es = new EnemyState(enemy);
 }
 
+sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
+    const enemies = sprites.allOfKind(SpriteKind.Enemy);
+    if (!enemies.length) {
+        for (let t of tiles.getTilesByType(myTiles.tile6)) {
+            tiles.setTileAt(t, myTiles.tile7);
+            tiles.setWallAt(t, false);
+        }
+    }
+})
 
 
